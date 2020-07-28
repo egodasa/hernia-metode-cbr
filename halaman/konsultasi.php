@@ -18,18 +18,18 @@
 
 		// CEK MASING-MASING GEJALA DAN COCOKAN DENGAN DATA GEJALA PENYAKIT
 		$keterangan = "Hasil pemeriksaan tidak ditemukan berdasarkan gejala yang dipilih!";
-		$data_hasil = $DB->query("Select
-					    tb_penyakit.id_penyakit,
-					    tb_penyakit.kd_penyakit,
-					    tb_penyakit.nm_penyakit,
-					    tb_penyakit.solusi,
-					GROUP_CONCAT(tb_gejala_penyakit.bobot) AS bobot,
-					    GROUP_CONCAT(IF(tb_detail_kasus.id_gejala IS NULL, 0, tb_gejala_penyakit.bobot)) AS bobot_kasus,
-					SUM(IF(tb_detail_kasus.id_gejala IS NULL, 0, tb_gejala_penyakit.bobot)) / SUM(tb_gejala_penyakit.bobot) as kemiripan
-					From
-					    tb_penyakit Inner Join
-					    tb_gejala_penyakit On tb_gejala_penyakit.id_penyakit = tb_penyakit.id_penyakit Left Join
-					    tb_detail_kasus On tb_gejala_penyakit.id_gejala = tb_detail_kasus.id_gejala WHERE tb_detail_kasus.id_kasus = ".$id_kasus." GROUP BY tb_penyakit.id_penyakit ORDER BY SUM(IF(tb_detail_kasus.id_gejala IS NULL, 0, tb_gejala_penyakit.bobot)) / SUM(tb_gejala_penyakit.bobot) DESC")->fetchAll(PDO::FETCH_ASSOC);
+		$data_hasil = $DB->query("Select 
+									tb_penyakit.id_penyakit,
+									tb_penyakit.kd_penyakit,
+									tb_penyakit.nm_penyakit,
+									tb_penyakit.solusi,
+									GROUP_CONCAT(tb_gejala_penyakit.bobot) AS bobot,
+									GROUP_CONCAT(IF(detail_kasus.id_gejala IS NULL, 0, tb_gejala_penyakit.bobot)) AS bobot_kasus,
+									SUM(IF(detail_kasus.id_gejala IS NULL, 0, tb_gejala_penyakit.bobot)) / SUM(tb_gejala_penyakit.bobot) as kemiripan 
+									From tb_penyakit 
+									Inner Join tb_gejala_penyakit On tb_gejala_penyakit.id_penyakit = tb_penyakit.id_penyakit 
+									Left Join (SELECT * FROM tb_detail_kasus WHERE tb_detail_kasus.id_kasus = ".$id_kasus.") detail_kasus 
+									On tb_gejala_penyakit.id_gejala = detail_kasus.id_gejala GROUP BY tb_penyakit.id_penyakit ORDER BY SUM(IF(detail_kasus.id_gejala IS NULL, 0, tb_gejala_penyakit.bobot)) / SUM(tb_gejala_penyakit.bobot) DESC")->fetchAll(PDO::FETCH_ASSOC);
 		
 		if(!empty($data_hasil))
 		{
