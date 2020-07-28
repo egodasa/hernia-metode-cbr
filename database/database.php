@@ -19,6 +19,11 @@ class Models {
       'password' => "mysql"
     ]);
   }
+
+  public function getDb()
+  {
+    return $this->db;
+  }
  
   /*
     ambilData(3, ["username", "password", "level"]);
@@ -29,6 +34,7 @@ class Models {
   */
   public function ambilData($id = null, $kolom = "*")
 	{
+    $result = null;
 		$tabel = $this->tabel;
     if(!empty($this->view))
     {
@@ -36,12 +42,18 @@ class Models {
     }
     if(!is_null($id))
     {
-      return $this->db->get($tabel, $kolom, [$this->primaryKey => $id]);
+      $result = $this->db->get($tabel, $kolom, [$this->primaryKey => $id]);
     }
     else
     {
-      return $this->db->select($tabel, $kolom);
+      $result = $this->db->select($tabel, $kolom);
     }
+    if(!empty($this->db->error()[1]))
+    {
+      echo $this->db->error()[2];
+      exit;
+    }
+    return $result;
 	}
   
   /*
@@ -54,12 +66,20 @@ class Models {
   */
 	public function ambilDataDenganKondisi($where, $kolom = "*")
 	{
+    $result = null;
     $tabel = $this->tabel;
     if(!empty($this->view))
     {
       $tabel = $this->view;
     }
-    return $this->db->select($tabel, $kolom, $where);
+    
+    $result = $this->db->select($tabel, $kolom, $where);
+    if(!empty($this->db->error()[1]))
+    {
+      echo $this->db->error()[2];
+      exit;
+    }
+    return $result;
 	}
   
   /*
@@ -73,9 +93,18 @@ class Models {
   {
     foreach($this->kolomBawaanCrud as $d)
     {
-      $this->data[$d] = $data[$d];
+      if(isset($data[$d]))
+      {
+        $this->data[$d] = $data[$d];
+      }
     }
+
     $this->db->insert($this->tabel, $this->data);
+    if(!empty($this->db->error()[1]))
+    {
+      echo "Error : ".$this->db->error()[2];
+      exit;
+    }
     return $this->db->id();
   }
   
@@ -90,9 +119,18 @@ class Models {
   {
     foreach($this->kolomBawaanCrud as $d)
     {
-      $this->data[$d] = $data[$d];
+      if(isset($data[$d]))
+      {
+        $this->data[$d] = $data[$d];
+      }
     }
+
     $this->db->update($this->tabel, $this->data, [$this->primaryKey => $id]);
+    if(!empty($this->db->error()[1]))
+    {
+      echo "Error : ".$this->db->error()[2];
+      exit;
+    }
     return true;
   }
   
@@ -103,6 +141,11 @@ class Models {
   public function hapusData($id)
   {
     $this->db->delete($this->tabel, [$this->primaryKey => $id]);
+    if(!empty($this->db->error()[1]))
+    {
+      echo $this->db->error()[2];
+      exit;
+    }
     return true;
   }
 }

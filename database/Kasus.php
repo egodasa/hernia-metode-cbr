@@ -9,7 +9,8 @@ class Kasus extends Models {
     	"id_user",
     	"tgl_kasus",
     	"id_penyakit",
-    	"kemiripan"
+      "kemiripan",
+    	"keterangan"
    	];
 
     // $this->view = "tb_user";

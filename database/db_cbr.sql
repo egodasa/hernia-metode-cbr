@@ -87,11 +87,11 @@ CREATE TABLE `tb_kasus` (
   `tgl_kasus` datetime NOT NULL,
   `id_penyakit` int(11) DEFAULT NULL,
   `kemiripan` double DEFAULT NULL,
+  `keterangan` text,
   PRIMARY KEY (`id_kasus`),
   KEY `id_penyakit` (`id_penyakit`),
   KEY `id_user` (`id_user`),
-  CONSTRAINT `tb_kasus_ibfk_3` FOREIGN KEY (`id_penyakit`) REFERENCES `tb_penyakit` (`id_penyakit`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `tb_kasus_ibfk_4` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `tb_kasus_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `tb_user` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -125,5 +125,9 @@ CREATE TABLE `tb_user` (
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `tb_user` (`id_user`, `username`, `password`, `nm_lengkap`, `tgl_lahir`, `jk`, `alamat`, `nohp`, `pekerjaan`, `level`) VALUES
+(1,	'locygebyte',	'56de48825b002939979921f9ea0c9033',	'Proident illo tempo',	'2000-10-27',	'Perempuan',	'Sunt consequuntur ip',	'Et quasi alias ',	'Earum irure cumque a',	'Member'),
+(2,	'buxuryf',	'56de48825b002939979921f9ea0c9033',	'Tempora dolorum repr',	'2000-11-27',	'Perempuan',	'Atque nulla deserunt',	'Eos ullam quod ',	'Rerum sint veritatis',	'Member'),
+(3,	'madam',	'38d43ac2ed7bcd14d55fc5c99214cf5c',	'Illo tenetur aliquid',	'2000-06-30',	'Perempuan',	'Exercitationem assum',	'Obcaecati at do',	'Quo obcaecati ut par',	'Member');
 
--- 2020-07-28 02:48:46
+-- 2020-07-28 08:46:19
