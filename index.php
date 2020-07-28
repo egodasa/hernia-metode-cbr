@@ -2,21 +2,21 @@
 	session_start();
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
-	require "config/pengaturan.php";
-	require "models/models.php";
-	require "models/User.php";
-	require "models/Penyakit.php";
-	require "models/Gejala.php";
-	require "models/GejalaPenyakit.php";
-	require "models/Kasus.php";
-	require "models/DetailKasus.php";
+	require "database/library.php";
+	require "database/database.php";
+	require "database/User.php";
+	require "database/Penyakit.php";
+	require "database/Gejala.php";
+	require "database/GejalaPenyakit.php";
+	require "database/Kasus.php";
+	require "database/DetailKasus.php";
 
-	$_USER = new User($DB);
-	$_PENYAKIT = new Penyakit($DB);
-	$_GEJALA = new Gejala($DB);
-	$_GEJALA_PENYAKIT = new GejalaPenyakit($DB);
-	$_KASUS = new Kasus($DB);
-	$_DETAIL_KASUS = new DetailKasus($DB);
+	$_USER = new User();
+	$_PENYAKIT = new Penyakit();
+	$_GEJALA = new Gejala();
+	$_GEJALA_PENYAKIT = new GejalaPenyakit();
+	$_KASUS = new Kasus();
+	$_DETAIL_KASUS = new DetailKasus();
 
 	ob_start();
 
