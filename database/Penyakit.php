@@ -6,7 +6,7 @@ class Penyakit extends Models {
     $this->tabel = "tb_penyakit";
     $this->primaryKey = "id_penyakit";
     $this->kolomBawaanCrud = [
-    	"kode_penyakit",
+    	"kd_penyakit",
     	"nm_penyakit",
     	"keterangan",
     	"solusi"

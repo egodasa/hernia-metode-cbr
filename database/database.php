@@ -10,13 +10,13 @@ class Models {
   public $view = null;
   function __construct()
   {
-    // pengaturan database
+    // PENGATURAN DATABASE
     $this->db = new Medoo([
       'database_type' => 'mysql',
-      'database_name' => $_GLOBALS['database'],
-      'server' => $_GLOBALS['server'],
-      'username' => $_GLOBALS['username'],
-      'password' => $_GLOBALS['password']
+      'database_name' => "db_cbr",
+      'server' => "localhost",
+      'username' => "root",
+      'password' => "mysql"
     ]);
   }
  
