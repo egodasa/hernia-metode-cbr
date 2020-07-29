@@ -1,20 +1,28 @@
 <?php
     if($_SERVER['REQUEST_METHOD'] == "POST")
     {
-        foreach($_POST['id_gejala'] as $no => $id)
+        foreach($_POST['id_gejala_penyakit'] as $no => $id)
         {
-            $_GEJALA_PENYAKIT->tambahData(array("id_penyakit" => $_SESSION['id_penyakit'], "id_gejala" => $id, "bobot" => $_POST['bobot_'.$id]));
+            $_GEJALA_PENYAKIT->editData(array("id_gejala_penyakit" => $id), array("bobot" => $_POST['bobot_'.$id]));
         }
         alert("success", "Pesan", "Data berhasil disimpan!");
         header("Location: index.php?page=admin/penyakit/gejala/index");
     }
 
-    $data_gejala = $DB->query("SELECT * FROM tb_gejala WHERE id_gejala NOT IN (SELECT id_gejala FROM tb_gejala_penyakit WHERE id_penyakit = :id_penyakit) ORDER BY kd_gejala ASC", array("id_penyakit" => $_SESSION['id_penyakit']));
+    $data_gejala = $DB->query("Select
+                tb_gejala_penyakit.id_gejala_penyakit,
+                tb_gejala.kd_gejala,
+                tb_gejala.nm_gejala,
+                tb_gejala_penyakit.bobot
+            From
+                tb_gejala_penyakit Inner Join
+                tb_gejala On tb_gejala_penyakit.id_gejala = tb_gejala.id_gejala WHERE tb_gejala_penyakit.id_penyakit = :id_penyakit", array("id_penyakit" => $_SESSION['id_penyakit']))->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 <div class="container">
     <div class="row">
         <div class="col-md-12 mb-4 mt-4">
-            <h2>Tambah Gejala Penyakit <?=$_SESSION['nm_penyakit']."(".$_SESSION['kd_penyakit'].")"?></h2>
+            <h2>Edit Gejala Penyakit <?=$_SESSION['nm_penyakit']."(".$_SESSION['kd_penyakit'].")"?></h2>
             <hr>   
             <form method="POST">
                 <div class="row">
@@ -22,20 +30,20 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>No</th>
                                     <th>Gejala</th>
                                     <th>Bobot</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                    foreach ($data_gejala as $data)
+                                    foreach ($data_gejala as $no => $data)
                                     {
                                 ?>  
                                     <tr>
-                                        <td><?=formInput("checkbox", "", "id_gejala[]", 0, $data['id_gejala'])?></td>
+                                        <td><?=$no+1?><?=formInput("hidden", "", "id_gejala_penyakit[]", 10, $data['id_gejala_penyakit'])?></td>
                                         <td><?=$data['kd_gejala']." - ".$data['nm_gejala']?></td>
-                                        <td><?=formInput("number", "", "bobot_".$data['id_gejala'], 10, 0)?></td>
+                                        <td><?=formInput("number", "", "bobot_".$data['id_gejala_penyakit'], 10, $data['bobot'])?></td>
                                     </tr>
                                 <?php
                                     }

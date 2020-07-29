@@ -30,6 +30,7 @@ From
             <hr>
             <a href="?page=admin/penyakit/index" class="btn btn-primary ">Kembali</a>
             <a href="?page=admin/penyakit/gejala/tambah" class="btn btn-primary ">Tambah Data</a>
+            <a href="?page=admin/penyakit/gejala/edit" class="btn btn-primary ">Edit Gejala Penyakit</a>
             <table class="table table-bordered table-striped table-responsive">
                 <thead>
                     <tr>
