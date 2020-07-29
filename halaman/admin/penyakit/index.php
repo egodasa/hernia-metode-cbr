@@ -30,6 +30,7 @@
                         <td><?=$penyakit['keterangan']?></td>
                         <td><?=$penyakit['solusi']?></td>
                         <td>
+                            <a href="index.php?page=admin/penyakit/gejala/index&id_penyakit=<?=$penyakit['id_penyakit']?>" class="btn btn-warning btn-sm">Gejala Penyakit</a>
                             <a href="index.php?page=admin/penyakit/edit&id_penyakit=<?=$penyakit['id_penyakit']?>" class="btn btn-warning btn-sm">Edit</a>
                             <a href="index.php?page=admin/penyakit/hapus&id_penyakit=<?=$penyakit['id_penyakit']?>" onclick="return confirm('Yakin hapus data ini?');" class="btn btn-danger btn-sm">Hapus</a>
                         </td>

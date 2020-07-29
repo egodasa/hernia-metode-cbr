@@ -68,7 +68,7 @@
 					foreach ($data_gejala as $data)
 					{
 				?>
-						<li><?=formInput("checkbox", $data['nm_gejala'], "id_gejala[]", 0, $data['id_gejala'])?></li>
+						<li><?=formInput("checkbox", $data["kd_gejala"]." - ".$data['nm_gejala'], "id_gejala[]", 0, $data['id_gejala'])?></li>
 				<?php
 					}
 				?>
