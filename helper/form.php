@@ -2,6 +2,7 @@
 	function formInput($type, $nama, $name, $max = "100", $value = "")
 	{	
 		$hasil = array("<div class='form-group'>");
+		$hasil[] = "<div class='form-label-group'>";
 		$hasil[] = "<label>$nama</label>";
 		switch($type)
 		{
@@ -13,7 +14,8 @@
 				$hasil[] = "<input type='$type' name='$name' class='form-control' min='0' max='$max' value='$value' />";
 			break;
 			case "hidden":
-				$hasil[] = "<input type='$type' name='$name' value='$value' />";
+				$hasil = array("<input type='$type' name='$name' value='$value' />");
+				return implode("", $hasil);
 			break;
 			case "textarea":
 				$hasil[] = "<textarea name='$name' class='form-control'>$value</textarea>";
@@ -24,7 +26,7 @@
 				return implode("", $hasil);
 			break;
 		}
-		$hasil[] = "</div>";
+		$hasil[] = "</div></div>";
 		return implode("", $hasil);
 	}
 
