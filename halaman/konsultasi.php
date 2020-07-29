@@ -47,7 +47,7 @@
 			$keterangan[] = "SOLUSI : ".$data_hasil[0]['solusi']." <br>";
 			$keterangan[] = "=======================================================";
 
-			$_KASUS->editData($id_kasus, array("id_penyakit" => $data_hasil[0]['id_penyakit'], "keterangan" => implode("", $keterangan)));
+			$_KASUS->editData($id_kasus, array("id_penyakit" => $data_hasil[0]['id_penyakit'],"kemiripan" => $data_hasil[0]['kemiripan'],"keterangan" => implode("", $keterangan)));
 		}
 		// MENAMPILKAN HASIL KONSULTASI
 ?>
